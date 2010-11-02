@@ -1,5 +1,5 @@
 category: KDE Video
-requires: libgcc1 libkdecore5 libmlt2 libmlt++3 libnepomuk4 libQtCore4 libQtDBus4 libQtGui4 libQtSvg4 libQtXml4 libstdc++6
+requires: libgcc1 libkdecore5 libmlt2 libmlt++3 libnepomuk4 libQtCore4 libQtDBus4 libQtGui4 libQtSvg4 libQtXml4 libstdc++6 libX11_6
 sdesc: "KDE non-linear video editor"
 ldesc: "Kdenlive is a free open-source video editor for GNU/Linux and 
 FreeBSD, which supports DV, AVCHD (experimental support) and HDV 
