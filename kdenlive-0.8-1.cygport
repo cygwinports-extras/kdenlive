@@ -3,6 +3,4 @@ inherit kde4
 DESCRIPTION="KDE non-linear video editor"
 HOMEPAGE="http://kdenlive.org/"
 SRC_URI="mirror://sourceforge/kdenlive/${P}.tar.gz"
-
-# linux-specific
-CYGCMAKE_ARGS="-DNO_JOGSHUTTLE=TRUE"
+PATCH_URI="0.8-cygwin.patch"

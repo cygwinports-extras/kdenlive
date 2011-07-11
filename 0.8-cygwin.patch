@@ -1,0 +1,94 @@
+--- origsrc/kdenlive-0.8/src/CMakeLists.txt	2011-04-26 14:44:22.000000000 -0500
++++ src/kdenlive-0.8/src/CMakeLists.txt	2011-07-11 13:05:25.368150500 -0500
+@@ -283,18 +283,18 @@ set(kdenlive_SRCS
+ 
+ add_definitions(${KDE4_DEFINITIONS})
+ 
+-if(APPLE OR CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "NetBSD" OR NO_JOGSHUTTLE)
++if(APPLE OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "NetBSD" OR NO_JOGSHUTTLE)
+   add_definitions(-DNO_JOGSHUTTLE)
+-else(APPLE OR CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "NetBSD" OR NO_JOGSHUTTLE)
++else(APPLE OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "NetBSD" OR NO_JOGSHUTTLE)
+   set(kdenlive_SRCS jogshuttle.cpp jogaction.cpp jogshuttleconfig.cpp ${kdenlive_SRCS})
+-endif(APPLE OR CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "NetBSD" OR NO_JOGSHUTTLE)
++endif(APPLE OR CYGWIN OR CMAKE_SYSTEM_NAME STREQUAL "FreeBSD" OR CMAKE_SYSTEM_NAME STREQUAL "NetBSD" OR NO_JOGSHUTTLE)
+ 
+ if(APPLE OR OPENGL_FOUND)
+   add_definitions(-DUSE_OPEN_GL)
+   set(kdenlive_SRCS videoglwidget.cpp ${kdenlive_SRCS})
+ endif(APPLE OR OPENGL_FOUND)
+ 
+-if(NOT APPLE AND NOT CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
++if(NOT APPLE AND NOT CYGWIN AND NOT CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+   set(kdenlive_SRCS
+     ${kdenlive_SRCS}
+     v4l/v4lcapture.cpp
+@@ -307,7 +307,7 @@ if(NOT APPLE AND NOT CMAKE_SYSTEM_NAME S
+     v4l/dec_s561.c
+     v4l/dec_yuv.c
+   )
+-endif(NOT APPLE AND NOT CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
++endif(NOT APPLE AND NOT CYGWIN AND NOT CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+ 
+ if(QJSON_FOUND)
+   set(kdenlive_SRCS
+@@ -369,4 +369,4 @@ install(FILES kdenlivesettings.kcfg DEST
+ install(FILES kdenlive.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+ kde4_install_icons(${ICON_INSTALL_DIR})
+ install(FILES kdenlive_titles.knsrc kdenlive_wipes.knsrc kdenlive_renderprofiles.knsrc kdenlive_projectprofiles.knsrc kdenlivetranscodingrc DESTINATION ${CONFIG_INSTALL_DIR})
+-kde4_install_icons(${ICON_INSTALL_DIR})
+\ No newline at end of file
++kde4_install_icons(${ICON_INSTALL_DIR})
+--- origsrc/kdenlive-0.8/src/blackmagic/capture.h	2011-04-26 14:44:23.000000000 -0500
++++ src/kdenlive-0.8/src/blackmagic/capture.h	2011-07-11 11:47:12.331405500 -0500
+@@ -7,7 +7,7 @@
+ #include <QWidget>
+ #include <QObject>
+ #include <QLayout>
+-#if defined(Q_WS_MAC) || defined(Q_OS_FREEBSD)
++#if defined(Q_WS_MAC) || defined(Q_OS_FREEBSD) || defined(Q_OS_CYGWIN)
+ #include <pthread.h>
+ #endif
+ 
+--- origsrc/kdenlive-0.8/src/kdenlivesettingsdialog.cpp	2011-04-26 14:44:22.000000000 -0500
++++ src/kdenlive-0.8/src/kdenlivesettingsdialog.cpp	2011-07-11 13:07:57.231836600 -0500
+@@ -93,7 +93,7 @@ KdenliveSettingsDialog::KdenliveSettings
+     QWidget *p4 = new QWidget;
+     m_configCapture.setupUi(p4);
+ 
+-#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD)
++#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD) && !defined(Q_OS_CYGWIN)
+     V4lCaptureHandler v4l(NULL);
+     // Video 4 Linux device detection
+     for (int i = 0; i < 10; i++) {
+--- origsrc/kdenlive-0.8/src/stopmotion/stopmotion.cpp	2011-04-26 14:44:22.000000000 -0500
++++ src/kdenlive-0.8/src/stopmotion/stopmotion.cpp	2011-07-11 13:07:26.733092200 -0500
+@@ -199,7 +199,7 @@ StopmotionWidget::StopmotionWidget(KUrl
+         connect(m_bmCapture, SIGNAL(gotMessage(const QString&)), this, SLOT(slotGotHDMIMessage(const QString&)));
+     }
+     if (QFile::exists(KdenliveSettings::video4vdevice())) {
+-#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD)
++#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD) && !defined(Q_OS_CYGWIN)
+         V4lCaptureHandler v4l(NULL);
+         // Video 4 Linux device detection
+         for (int i = 0; i < 10; i++) {
+@@ -325,7 +325,7 @@ void StopmotionWidget::slotUpdateHandler
+     }
+     m_layout->removeWidget(m_frame_preview);
+     if (data == "v4l") {
+-#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD)
++#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD) && !defined(Q_OS_CYGWIN)
+         m_bmCapture = new V4lCaptureHandler(m_layout);
+         m_bmCapture->setDevice(capture_device->itemData(capture_device->currentIndex(), Qt::UserRole + 1).toString(), capture_device->itemData(capture_device->currentIndex(), Qt::UserRole + 2).toString());
+ #endif
+--- origsrc/kdenlive-0.8/src/wizard.cpp	2011-04-26 14:44:22.000000000 -0500
++++ src/kdenlive-0.8/src/wizard.cpp	2011-07-11 13:08:11.841672200 -0500
+@@ -147,7 +147,7 @@ Wizard::Wizard(bool upgrade, QWidget *pa
+ 
+ void Wizard::slotDetectWebcam()
+ {
+-#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD)
++#if !defined(Q_WS_MAC) && !defined(Q_OS_FREEBSD) && !defined(Q_OS_CYGWIN)
+     m_capture.device_list->clear();
+ 
+     // Video 4 Linux device detection
