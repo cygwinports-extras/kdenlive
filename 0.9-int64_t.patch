@@ -1,0 +1,14 @@
+In file included from audioCorrelation.h:14:0,
+		 from audioCorrelation.cpp:11:
+audioCorrelationInfo.h:28:5: error: ‘int64_t’ does not name a type
+
+--- origsrc/kdenlive-0.9/src/lib/audio/audioCorrelationInfo.h	2012-05-14 14:55:13.000000000 -0500
++++ src/kdenlive-0.9/src/lib/audio/audioCorrelationInfo.h	2012-05-20 18:33:01.289222600 -0500
+@@ -11,6 +11,7 @@
+ #ifndef AUDIOCORRELATIONINFO_H
+ #define AUDIOCORRELATIONINFO_H
+ 
++#include <sys/types.h>
+ #include <QImage>
+ 
+ /**
