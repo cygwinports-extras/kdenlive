@@ -1,8 +1,0 @@
-category: KDE Video
-requires: dvdauthor mkisofs mlt recordmydesktop xine libgcc1 libGL1 libGLU1 libkdecore5 libmlt4 libmlt++3 libqjson0 libQtCore4 libQtDBus4 libQtGui4 libQtOpenGL4 libQtScript4 libQtSvg4 libQtXml4 libstdc++6 libX11_6
-sdesc: "KDE non-linear video editor"
-ldesc: "Kdenlive is a free open-source video editor for GNU/Linux and 
-FreeBSD, which supports DV, AVCHD (experimental support) and HDV 
-editing. Kdenlive relies on several other open source projects, such as 
-FFmpeg and MLT video framework. It was designed to answer all needs, 
-from basic video editing to semi-professional work."

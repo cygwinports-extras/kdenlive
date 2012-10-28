@@ -1,0 +1,19 @@
+inherit kde4
+
+NAME="kdenlive"
+VERSION=0.9.2
+RELEASE=1
+CATEGORY="KDE Video"
+SUMMARY="KDE non-linear video editor"
+DESCRIPTION="Kdenlive is a free open-source video editor for GNU/Linux and
+FreeBSD, which supports DV, AVCHD (experimental support) and HDV editing.
+Kdenlive relies on several other open source projects, such as FFmpeg and MLT
+video framework. It was designed to answer all needs, from basic video editing
+to semi-professional work."
+HOMEPAGE="http://kdenlive.org/"
+SRC_URI="mirror://kde/stable/kdenlive/${VERSION}/src/kdenlive-${VERSION}.tar.bz2"
+PATCH_URI="0.9-int64_t.patch"
+
+REQUIRES="dvdauthor mkisofs mlt recordmydesktop xine"
+
+CYGCMAKE_ARGS="-DWITH_JogShuttle=NO -DWITH_V4L=NO"
