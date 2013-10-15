@@ -1,9 +1,9 @@
 inherit kde4
 
 NAME="kdenlive"
-VERSION=0.9.2
+VERSION=0.9.6
 RELEASE=1
-CATEGORY="KDE Video"
+CATEGORY="Video"
 SUMMARY="KDE non-linear video editor"
 DESCRIPTION="Kdenlive is a free open-source video editor for GNU/Linux and
 FreeBSD, which supports DV, AVCHD (experimental support) and HDV editing.
