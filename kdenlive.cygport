@@ -1,7 +1,7 @@
 inherit kde4
 
 NAME="kdenlive"
-VERSION=0.9.6
+VERSION=0.9.8
 RELEASE=1
 CATEGORY="Video"
 SUMMARY="KDE non-linear video editor"
@@ -12,7 +12,6 @@ video framework. It was designed to answer all needs, from basic video editing
 to semi-professional work."
 HOMEPAGE="http://kdenlive.org/"
 SRC_URI="mirror://kde/stable/kdenlive/${VERSION}/src/kdenlive-${VERSION}.tar.bz2"
-PATCH_URI="0.9-int64_t.patch"
 
 REQUIRES="dvdauthor mkisofs mlt recordmydesktop xine"
 
